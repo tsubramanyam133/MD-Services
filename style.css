@@ -1047,3 +1047,24 @@ footer {
 .pest-single-card:hover .media-display img {
     transform: scale(1.1);
 }
+
+@media (max-width: 768px) {
+    .experience-card {
+        margin-top: 20px;  /* Pushes it down instead of pulling it up */
+        position: static;   /* Resets any absolute positioning */
+        transform: none;    /* Resets any transform shifts */
+    }
+}
+@media (max-width: 768px) {
+  .slider-container, 
+  .slider-wrapper {
+    width: 100% !important;       /* Force container to fit screen */
+    overflow-x: hidden;           /* Hide horizontal scrollbars */
+  }
+
+  .slider img {
+    width: 100%;                  /* Force image to fit width of screen */
+    height: auto;                 /* Maintain aspect ratio so it doesn't stretch */
+    object-fit: contain;          /* Ensures the whole image is visible */
+  }
+}
