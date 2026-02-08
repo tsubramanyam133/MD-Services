@@ -1,0 +1,1049 @@
+/* --- Variables & Reset --- */
+:root {
+    --primary-color: #0ea5e9; /* Medical/Clean Blue */
+    --secondary-color: #0f172a; /* Dark Navy */
+    --accent-color: #22c55e; /* Success Green */
+    --text-color:rgba(237, 110, 6, 0.8);
+    --light-bg: #f8fafc;
+    --white: #ffffff;
+    --transition: all 0.3s ease-in-out;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    scroll-behavior: smooth;
+}
+
+body {
+    color: var(--text-color);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* --- Utilities --- */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.section-padding {
+    padding: 80px 0;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.section-header h2 {
+    font-size: 2.5rem;
+    color: var(--secondary-color);
+    margin-bottom: 10px;
+}
+
+.line {
+    width: 60px;
+    height: 4px;
+    background-color: var(--primary-color);
+    margin: 0 auto;
+    border-radius: 2px;
+}
+
+/* --- Navbar --- */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    z-index: 1000;
+    padding: 15px 0;
+    transition: var(--transition);
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* --- Logo Layout Fix --- */
+.logo {
+    display: flex;            /* key: aligns items in a row */
+    align-items: center;      /* key: centers them vertically */
+    gap: 15px;                /* space between image and text */
+    text-decoration: none;
+}
+
+.logo img {
+    height: 60px;             /* Limit height so it fits in navbar */
+    width: auto;              /* Keep the square shape correct */
+    object-fit: contain;      /* Stop it from stretching */
+    display: block;           /* Removes extra bottom space */
+}
+
+.logo span {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    line-height: 1;           /* Tighten text height */
+}
+.nav-links {
+    display: flex;
+    list-style: none;
+    align-items: center;
+    gap: 30px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: darkblue;
+    font-weight: 500;
+    transition: var(--transition);
+    position: relative; /* Required for the underline positioning */
+    display: inline-block;
+    font-weight: 600; /* Ensures the width matches the text */
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px; /* Thickness of the line */
+    bottom: -5px; /* Distance from the text */
+    left: 0;
+    background-color: green; /* Color of the line */
+    
+    /* Animation Magic */
+    transform: scaleX(0); /* Start with 0 width */
+    transform-origin: center; /* Make it grow from the center */
+    transition: transform 0.3s ease-in-out;
+}.nav-links a:hover {
+    color: rgb(209, 14, 193); /* Change text color too */
+}
+
+.nav-links a:hover::after {
+    transform: scaleX(1); /* Expand to full width */
+}
+
+.nav-btn {
+    padding: 10px 25px;
+    background-color: var(--primary-color);
+    color: var(--white) !important;
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
+}
+
+.nav-btn:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-2px);
+}
+
+.hamburger {
+    display: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+
+.hero {
+    height: 100vh;
+    background-color: rgb(219, 144, 4);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--white);
+    
+    /* FIX: Add padding so text starts below the navbar */
+    padding-top: 80px; 
+    
+    /* If you have a negative margin here, remove it or set it to 0 */
+    margin-top: 0; 
+}
+
+.explore{
+    color:#22c55e;
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background-color: transparent;
+
+}
+.explore:hover{
+    text-decoration: underline 2px;
+    transform: translateX(15px);
+    background-color:var(--transition);
+    border: 2px solid #1cdcea;
+    border-radius: 20px 20px 20px 20px;
+    padding: 20px 40px;
+    transition: opacity 0.3s ease, transform 1s ease-in-out;
+    
+}
+.hero-slider-section {
+    position: relative;
+    height: 100vh; 
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-top: 0; /* Reset margin since we use absolute positioning */
+}
+
+
+.slider-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2; 
+}
+
+/* Individual Slide */
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    opacity: 0; /* Hidden by default */
+    transition: opacity 1s ease-in-out, transform 6s linear; /* Smooth fade & zoom */
+    transform: scale(1.05);
+}
+.slider-container{
+    margin-top: 90px;
+}
+/* Active Slide State */
+.slide.active {
+    opacity: 1; /* Visible */
+    transform: scale(1.1); /* Slow zoom in effect */
+}
+
+/* Overlay to make text readable */
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 23, 42, 0.6); /* Dark blue tint */
+    z-index: -1;
+}
+
+/* Content Styles */
+.hero-content {
+    z-index: 10; /* Top priority */
+    padding: 0 20px;
+    margin-top: 60px; /* Push down slightly for navbar */
+}
+
+.hero-content h1 {
+    font-size: 3.5rem;
+    color: #fff;
+    margin-bottom: 20px;
+    font-weight: 700;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.hero-content p {
+    font-size: 1.3rem;
+    color: #cbd5e1;
+    margin-bottom: 30px;
+    letter-spacing: 1px;
+}
+
+/* Button Group */
+.hero-btns {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.secondary-btn {
+    display: inline-block;
+    padding: 15px 40px;
+    background-color: transparent;
+    border: 2px solid #fff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.secondary-btn:hover {
+    background-color: #fff;
+    color: var(--secondary-color);
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .hero-content h1 { font-size: 2.2rem; }
+    .hero-btns { flex-direction: column; gap: 15px; }
+}
+
+.cta-btn {
+    display: inline-block;
+    padding: 15px 40px;
+    background-color: var(--accent-color);
+    color: var(--white);
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: var(--transition);
+}
+
+.cta-btn:hover {
+    background-color: #16a34a;
+    transform: scale(1.05);
+}
+
+/* --- Animations --- */
+.fade-in-up {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 1s forwards;
+}
+
+.delay-1 { animation-delay: 0.2s; }
+.delay-2 { animation-delay: 0.4s; }
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.8s ease-out;
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- About Section --- */
+.about{
+    background-color:wheat;
+}
+.about-content {
+    display: flex;
+    align-items: center; /* Vertically center */
+    gap: 60px;
+  
+}
+
+.about-image {
+    flex: 1;
+    position: relative; /* Needed for the floating badge */
+}
+
+.about-image img {
+    width: 100%;
+    border-radius: 20px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+}.experience-badge {
+    position: absolute;
+    bottom: 30px;
+    left: -20px; /* Floats slightly off the image */
+    background: var(--primary-color);
+    color: #fff;
+    padding: 20px 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(14, 165, 233, 0.4);
+    text-align: center;
+    border: 4px solid #fff;
+}.experience-badge .years {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.experience-badge .text {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Text Side */
+.about-text {
+    flex: 1;
+}
+
+.about-text h3 {
+    font-size: 2rem;
+    color: peru;
+    margin-bottom: 20px;
+}
+.about h2 {
+   
+    color:darkblue;
+   
+}
+.about-text p {
+    color: #64748b;
+    margin-bottom: 20px;
+}
+
+.features-list {
+    list-style: none;
+    margin-top: 20px;
+}
+
+.features-list li {
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.features-list i {
+    color: var(--accent-color);
+    font-size: 1.2rem;
+}
+.stats-grid {
+    display: flex;
+    gap: 30px;
+    margin-top: 30px;
+    padding-top: 30px;
+    border-top: 1px solid #e2e8f0;
+}.stat-item {
+    text-align: center;
+}
+
+.stat-item h2 {
+    display: inline-block;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 5px;
+}
+
+.stat-item span {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.stat-item p {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--secondary-color);
+    margin: 0;
+    text-transform: uppercase;
+}/* --- About Section Updates --- */
+
+.about-content {
+    display: flex;
+    align-items: center; /* Vertically center */
+    gap: 60px; /* Space between image and text */
+}
+
+/* Image Side */
+.about-image {
+    flex: 1;
+    position: relative; /* Needed for the floating badge */
+}
+
+.about-image img {
+    width: 100%;
+    border-radius: 20px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+}
+
+/* Floating Experience Badge */
+.experience-badge {
+    position: absolute;
+    bottom: 30px;
+    left: -20px; /* Floats slightly off the image */
+    background: var(--primary-color);
+    color: #fff;
+    padding: 20px 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(14, 165, 233, 0.4);
+    text-align: center;
+    border: 4px solid #fff;
+}
+
+.experience-badge .years {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.experience-badge .text {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Text Side */
+.about-text {
+    flex: 1;
+}
+
+.about-text h3 {
+    font-size: 2rem;
+    color: var(--secondary-color);
+    margin-bottom: 20px;
+}
+
+.about-text p {
+    color: #64748b;
+    margin-bottom: 20px;
+}
+
+.features-list li {
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.features-list i {
+    color: var(--accent-color);
+    font-size: 1.2rem;
+}
+
+/* Live Stats Grid */
+.stats-grid {
+    display: flex;
+    gap: 30px;
+    margin-top: 30px;
+    padding-top: 30px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-item h2 {
+    display: inline-block;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 5px;
+}
+
+.stat-item span {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.stat-item p {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--secondary-color);
+    margin: 0;
+    text-transform: uppercase;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .about-content {
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .experience-badge {
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: -30px;
+        width: 80%;
+    }
+    
+    .stats-grid {
+        justify-content: space-between;
+        gap: 10px;
+    }
+    
+    .stat-item h2, .stat-item span {
+        font-size: 1.8rem;
+    }
+}
+
+/* =========================================
+   NEW: Main Homepage Service Cards (Grid) 
+   ========================================= */
+.services-grid-main {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.service-main-card {
+    background: #fff;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #eee;
+}
+
+.service-main-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+/* Image Section within Card */
+.card-image {
+    height: 200px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.service-main-card:hover .card-image img {
+    transform: scale(1.1); /* Zoom effect */
+}
+
+/* Overlay with Arrow */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(185, 235, 147, 0.7); /* Primary color with opacity */
+    display: flex;
+    opacity: 50%;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.overlay i {
+    color: #ed0abc;
+    font-size: 3rem;
+    transform: translateX(-20px);
+    transition: transform 0.4s ease-in-out;
+}
+
+.service-main-card:hover .overlay {
+    opacity: 1;
+}
+
+.service-main-card:hover .overlay i {
+    transform: translateX(4px);
+}
+
+/* Content Section within Card */
+.card-content {
+    padding: 25px;
+    text-align: center;
+    flex-grow: 1;
+    display: flex;
+    background-color: ivory;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card-content .icon {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.card-content h3 {
+    font-size: 1.4rem;
+    color: var(--secondary-color);
+    margin-bottom: 10px;
+}
+
+.card-content p {
+    color: #8592a5;
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+}
+
+.link-text {
+    margin-top: auto;
+    color: purple;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.link-text:hover{
+    text-decoration: underline 2px;
+
+}
+/* =========================================
+   Detail Pages: Service Blocks & Videos
+   ========================================= */
+
+/* Category Styling */
+.service-category {
+    background: #fff;
+    border-radius: 20px;
+    padding: 40px;
+    margin-bottom: 60px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    border: 1px solid #eee;
+}
+.services{
+    background-color:lightyellow;
+}
+.services h2{
+    color:darkblue; 
+}
+.category-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 15px;
+}
+
+.category-header i {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    background: #e0f2fe;
+    padding: 15px;
+    border-radius: 50%;
+}
+
+.category-header h3 {
+    font-size: 1.8rem;
+    color: var(--secondary-color);
+}
+
+/* Detailed Pest Block Styling */
+.pest-service-block {
+    margin-bottom: 50px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.pest-service-block:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.pest-info {
+    margin-bottom: 20px;
+}
+
+.pest-info h4 {
+    color: var(--secondary-color);
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+    border-left: 5px solid var(--primary-color);
+    padding-left: 15px;
+}
+
+.pest-info ul {
+    list-style: none;
+    padding-left: 20px;
+}
+
+.pest-info li {
+    position: relative;
+    margin-bottom: 8px;
+    color: #475569;
+}
+
+.pest-info li::before {
+    content: '✓';
+    color: var(--accent-color);
+    position: absolute;
+    left: -20px;
+    font-weight: bold;
+}
+
+/* Video Section General Styles */
+.video-comparison-wrapper {
+    background: #1e293b; /* Dark Navy Background */
+    padding: 30px;
+    border-radius: 15px;
+    color: #fff;
+    margin-top: 20px;
+}
+
+.video-title, .video-comparison-wrapper h4 {
+    text-align: center;
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+}
+
+.video-container {
+    display: flex;             /* Forces side-by-side layout */
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;                 /* Space between videos */
+    width: 100%;
+    position: relative;
+}
+.video-box {
+    position: relative;
+    flex: 1;                   /* Makes both boxes equal width */
+    width: 50%;                /* Fallback width */
+    aspect-ratio: 16 / 9;      /* Forces a standard video rectangle shape */
+    background: #000;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.video-box video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;         /* Ensures video fills the box perfectly */
+    display: block;
+}
+
+/* Video Labels (Before/After) */
+.label {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 5px 15px;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 5px;
+    z-index: 10;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.label.before { background-color: #ef4444; } /* Red */
+.label.after { background-color: var(--accent-color); } /* Green */
+
+.vs-badge {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%); /* Centers it perfectly */
+    z-index: 10;
+    background: var(--secondary-color);
+    color: #fff;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    font-weight: bold;
+    font-size: 0.8rem;
+}
+
+/* --- Contact Section --- */
+.contact-icons-container {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    flex-wrap: wrap;
+    
+}
+.contact{
+    background-color: #e7f887;
+}
+
+.contact-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+   color: #310af4;
+    transition: var(--transition);
+}
+
+.icon-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    color: #fff;
+    margin-bottom: 15px;
+    transition: var(--transition);
+}
+.contact h2{
+    color:darkblue;
+}
+
+.phone .icon-circle { background-color: #3b82f6;}
+/* Straighten the phone icon */
+.phone .fa-phone-alt {
+    transform: rotate(90deg);
+}
+.whatsapp .icon-circle { background-color: #25D366; }
+.instagram .icon-circle { 
+    background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+}
+
+.contact-item:hover .icon-circle {
+    transform: scale(1.1) rotate(10deg);
+}
+
+.contact-item:hover span {
+    color: brown;
+    font-weight: bold;
+}
+
+/* --- Footer --- */
+footer {
+    background-color: var(--secondary-color);
+    color: var(--white);
+    text-align: center;
+    padding: 20px;
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background: white;
+        flex-direction: column;
+        padding: 20px;
+        box-shadow: 0 10px 10px rgba(0,0,0,0.1);
+    }
+    
+    .nav-links.active {
+        display: flex;
+    }
+
+    .hamburger { display: block; }
+    
+    .hero-content h1 { font-size: 2.5rem; }
+    
+    .about-content { flex-direction: column; }
+    
+    /* Video Stacking for Mobile */
+    .video-container { flex-direction: column; }
+    .video-box { width: 100%; }
+    
+    .vs-badge { margin: 10px 0; transform: rotate(90deg); }
+}
+/* --- Pest Control Single Grid Layout --- */
+
+.pest-grid-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 40px;
+}
+
+.pest-single-card {
+    background: #ffffff;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    border: 1px solid #eee;
+    transition: transform 0.3s ease;
+}
+
+.pest-single-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+}
+
+.card-header {
+    background-color: var(--secondary-color);
+    padding: 15px 20px;
+}
+
+.card-header h3 {
+    color: #fff;
+    font-size: 1.1rem;
+    margin: 0;
+    font-weight: 500;
+}
+
+.video-display {
+    width: 100%;
+    height: 250px; /* Fixed height for uniformity */
+    background: #000;
+}
+
+.video-display video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures video fills the box without stretching */
+    display: block;
+    color-scheme: var(--white);
+}
+
+.card-desc {
+    padding: 20px;
+}
+
+.card-desc p {
+    color: #475569;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Mobile Adjustment */
+@media (max-width: 768px) {
+    .pest-grid-layout {
+        grid-template-columns: 1fr; /* Stack one on top of another on mobile */
+    }
+}
+/* --- Media Display (Images & Videos) --- */
+
+/* This reuses the video box style for images */
+.media-display {
+    width: 100%;
+    height: 250px; /* Fixed height for uniformity */
+    background: #f1f5f9;
+}
+
+.media-display img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* This makes sure the image fills the box without stretching */
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+/* Optional: Slight zoom effect on image hover */
+.pest-single-card:hover .media-display img {
+    transform: scale(1.1);
+}
