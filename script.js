@@ -104,23 +104,45 @@ window.addEventListener('scroll', () => {
     }
 });
 const video = document.getElementById('myVideo');
-const pipButton = document.getElementById('pipButton');
+const pipBtn = document.getElementById('pipBtn');
+const wrapper = document.querySelector('.video-wrapper');
+let hideTimeout;
 
-// Hide button if browser doesn't support PiP
-if (!document.pictureInPictureEnabled) {
-    pipButton.style.display = 'none';
+// 1. Logic to show button on Mobile Tap
+function toggleControls() {
+    // Add the class to show the button
+    wrapper.classList.add('show-mobile-btn');
+    pipBtn.classList.add('active');
+
+    // Clear any existing timer so it doesn't disappear too fast
+    clearTimeout(hideTimeout);
+
+    // Hide it again after 3 seconds
+    hideTimeout = setTimeout(() => {
+        wrapper.classList.remove('show-mobile-btn');
+        pipBtn.classList.remove('active');
+    }, 3000);
 }
 
-pipButton.addEventListener('click', async () => {
+// 2. Logic to Trigger Picture-in-Picture
+pipBtn.addEventListener('click', async (e) => {
+    e.stopPropagation(); // Prevent the click from triggering the toggleControls again
+    
     try {
-        if (document.pictureInPictureElement) {
-            // If already in PiP, exit it
-            await document.exitPictureInPicture();
+        if (document.pictureInPictureEnabled) {
+            // Standard (Android/Chrome/Edge)
+            if (video !== document.pictureInPictureElement) {
+                await video.requestPictureInPicture();
+            } else {
+                await document.exitPictureInPicture();
+            }
+        } else if (video.webkitSupportsPresentationMode) {
+            // iOS (iPhone Safari)
+            video.webkitSetPresentationMode(video.webkitPresentationMode === "picture-in-picture" ? "inline" : "picture-in-picture");
         } else {
-            // If not in PiP, enter it
-            await video.requestPictureInPicture();
+            alert("PiP not supported on this device");
         }
     } catch (error) {
-        console.error(error);
+        console.error("PiP Error:", error);
     }
 });

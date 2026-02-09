@@ -40,12 +40,19 @@
 
                 <div class="pest-single-card">
                     <div class="card-header"><h3>1. Termite Control</h3></div>
-                    <div class="video-display">
-                        <video loop  playsinline webkit-playsinline width="100%"  ><source src="videos/termites (2).mp4" type="video/mp4"></video>
-                        <button id="pipButton" style="margin-top: 10px; padding: 10px; background: #333; color: white; border: none; border-radius: 5px;">
-    Toggle Picture-in-Picture
-</button>
-                    </div>
+                    <div class="video-wrapper" onclick="toggleControls()">
+    <video id="myVideo" playsinline webkit-playsinline width="100%" class="main-video">
+        <source src="videos/termites (2).mp4" type="video/mp4">
+        Your browser does not support video.
+    </video>
+
+    <button id="pipBtn" class="pip-overlay-btn">
+        <svg viewBox="0 0 24 24" fill="white" width="20" height="20">
+            <path d="M19 11h-8v6h8v-6zm4 8V4.98C23 3.88 22.1 3 21 3H3c-1.1 0-2 .88-2 1.98V19c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2zm-2 .02H3V4.97h18v14.05z"/>
+        </svg>
+        <span>Picture in picture</span>
+    </button>
+</div>
                     <div class="card-desc"><p>Complete colony elimination using advanced baiting zones.</p></div>
                 </div>
 

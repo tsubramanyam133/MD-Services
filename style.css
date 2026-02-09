@@ -1062,3 +1062,63 @@ footer {
         object-fit: contain !important; /* Ensures the WHOLE image is seen */
     }
 }
+/* Container must be relative so the button can sit inside it */
+.video-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    max-width: 600px; /* Adjust as needed */
+    overflow: hidden;
+    border-radius: 8px; /* Optional: rounds the video corners */
+}
+
+.main-video {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+/* The Overlay Button Styling */
+.pip-overlay-btn {
+    position: absolute;
+    top: 50%;               /* Center vertically */
+    left: 50%;              /* Center horizontally */
+    transform: translate(-50%, -50%); /* Perfect centering */
+    
+    background-color: rgba(0, 0, 0, 0.7); /* Dark see-through background */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-family: sans-serif;
+    cursor: pointer;
+    
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Space between icon and text */
+    
+    /* Animation: Hidden by default */
+    opacity: 0; 
+    transition: opacity 0.3s ease;
+    pointer-events: none; /* Let clicks pass through to video when hidden */
+}
+
+/* Show button when button is active (clickable) */
+.pip-overlay-btn.active {
+    pointer-events: auto;
+}
+
+/* --- INTERACTION --- */
+
+/* Desktop: Show on Hover */
+.video-wrapper:hover .pip-overlay-btn {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Mobile: We will use JS to add this class on tap */
+.video-wrapper.show-mobile-btn .pip-overlay-btn {
+    opacity: 1;
+    pointer-events: auto;
+}
