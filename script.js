@@ -103,3 +103,24 @@ window.addEventListener('scroll', () => {
         animated = true; // Ensure it only runs once
     }
 });
+const video = document.getElementById('myVideo');
+const pipButton = document.getElementById('pipButton');
+
+// Hide button if browser doesn't support PiP
+if (!document.pictureInPictureEnabled) {
+    pipButton.style.display = 'none';
+}
+
+pipButton.addEventListener('click', async () => {
+    try {
+        if (document.pictureInPictureElement) {
+            // If already in PiP, exit it
+            await document.exitPictureInPicture();
+        } else {
+            // If not in PiP, enter it
+            await video.requestPictureInPicture();
+        }
+    } catch (error) {
+        console.error(error);
+    }
+});
